@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>teleop_twist_joy</name>
+  <name>steamdeck_teleop</name>
   <version>2.4.3</version>
   <description>Generic joystick teleop for twist robots.</description>
   <maintainer email="clalancette@openrobotics.org">Chris Lalancette</maintainer>
