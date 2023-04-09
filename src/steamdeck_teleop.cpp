@@ -318,6 +318,13 @@ double getVal(const sensor_msgs::msg::Joy::SharedPtr joy_msg, const std::map<std
     return 0.0;
   }
 
+  double y_threshold = 0.75;
+  if ((fieldname == "y" || fieldname == "x") &&
+      joy_msg->axes[axis_map.at(fieldname)] < y_threshold &&
+      joy_msg->axes[axis_map.at(fieldname)] > -y_threshold)
+    {
+      return 0.0;
+    }
   return joy_msg->axes[axis_map.at(fieldname)] * scale_map.at(fieldname);
 }
 
@@ -342,7 +349,8 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::msg::Joy::SharedPtr jo
 {
   if (enable_turbo_button >= 0 &&
       static_cast<int>(joy_msg->buttons.size()) > enable_turbo_button &&
-      joy_msg->buttons[enable_turbo_button])
+      joy_msg->buttons[enable_turbo_button] &&
+      joy_msg->buttons[enable_button])
   {
     sendCmdVelMsg(joy_msg, "turbo");
   }
